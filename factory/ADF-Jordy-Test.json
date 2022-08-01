@@ -1,0 +1,9 @@
+{
+	"name": "ADF-Jordy-Test",
+	"location": "westeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "7b8dc0db-169d-44a8-a301-62f6990d4ac0",
+		"tenantId": "ffc01e36-0721-4741-b9dc-35d2919afab2"
+	}
+}
