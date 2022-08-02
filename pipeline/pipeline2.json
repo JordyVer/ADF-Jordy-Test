@@ -56,10 +56,6 @@
 				"typeProperties": {
 					"source": {
 						"type": "CosmosDbSqlApiSource",
-						"query": {
-							"value": "@select * from c\nwhere c.Name = \"variables('Username')\"",
-							"type": "Expression"
-						},
 						"preferredRegions": [],
 						"detectDatetime": true
 					},
