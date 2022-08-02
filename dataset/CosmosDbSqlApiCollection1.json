@@ -7,7 +7,20 @@
 		},
 		"annotations": [],
 		"type": "CosmosDbSqlApiCollection",
-		"schema": {},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"UserId": {
+					"type": "integer"
+				},
+				"Name": {
+					"type": "string"
+				},
+				"Created": {
+					"type": "string"
+				}
+			}
+		},
 		"typeProperties": {
 			"collectionName": "Users",
 			"database": "Users"
