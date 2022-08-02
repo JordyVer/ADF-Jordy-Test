@@ -1,0 +1,86 @@
+{
+	"name": "pipeline2",
+	"properties": {
+		"activities": [
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@empty(activity('Lookup1').output.value)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Select Username",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Username",
+					"value": {
+						"value": "json(@pipeline().parameters.UserJson).Username",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Select Username",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CosmosDbSqlApiSource",
+						"query": {
+							"value": "@select * from c\nwhere c.Name = \"variables('Username')\"",
+							"type": "Expression"
+						},
+						"preferredRegions": [],
+						"detectDatetime": true
+					},
+					"dataset": {
+						"referenceName": "CosmosDbSqlApiCollection1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			}
+		],
+		"parameters": {
+			"UserJson": {
+				"type": "object"
+			}
+		},
+		"variables": {
+			"Username": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
