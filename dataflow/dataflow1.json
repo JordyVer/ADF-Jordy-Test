@@ -5,9 +5,9 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"dataset": {
-						"referenceName": "CosmosDbSqlApiCollection1",
-						"type": "DatasetReference"
+					"linkedService": {
+						"referenceName": "CosmosDb1",
+						"type": "LinkedServiceReference"
 					},
 					"name": "source1"
 				}
@@ -15,11 +15,16 @@
 			"sinks": [],
 			"transformations": [],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     enableChangeFeed: true,",
-				"     changeFeedStartFromTheBeginning: true,",
-				"     format: 'document') ~> source1"
+				"source(output(",
+				"          Created as string,",
+				"          Name as string,",
+				"          UserId as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: true,",
+				"     format: 'document',",
+				"     container: 'Users',",
+				"     store: 'cosmosDB') ~> source1"
 			]
 		}
 	}
