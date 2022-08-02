@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@empty(activity('Lookup1').output.value)",
+						"value": "@empty(activity('Lookup2').output.value)",
 						"type": "Expression"
 					}
 				}
