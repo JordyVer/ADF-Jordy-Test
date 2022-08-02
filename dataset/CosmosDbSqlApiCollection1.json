@@ -9,7 +9,7 @@
 		"type": "CosmosDbSqlApiCollection",
 		"schema": {},
 		"typeProperties": {
-			"collectionName": "ABS-6519",
+			"collectionName": "Users",
 			"database": "Users"
 		}
 	}
