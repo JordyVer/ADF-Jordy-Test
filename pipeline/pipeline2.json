@@ -7,7 +7,7 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "Lookup1",
+						"activity": "Lookup2",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -35,7 +35,7 @@
 				}
 			},
 			{
-				"name": "Lookup1",
+				"name": "Lookup2",
 				"type": "Lookup",
 				"dependsOn": [
 					{
