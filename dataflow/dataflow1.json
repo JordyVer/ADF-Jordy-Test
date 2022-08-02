@@ -13,7 +13,11 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "sort1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          Created as string,",
@@ -24,7 +28,8 @@
 				"     validateSchema: true,",
 				"     format: 'document',",
 				"     container: 'Users',",
-				"     store: 'cosmosDB') ~> source1"
+				"     store: 'cosmosDB') ~> source1",
+				"source1 sort(asc(UserId, true)) ~> sort1"
 			]
 		}
 	}
