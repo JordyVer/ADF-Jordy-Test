@@ -10,11 +10,25 @@
 						"type": "LinkedServiceReference"
 					},
 					"name": "source1"
+				},
+				{
+					"linkedService": {
+						"referenceName": "CosmosDb1",
+						"type": "LinkedServiceReference"
+					},
+					"name": "source2"
 				}
 			],
 			"sinks": [
 				{
 					"name": "sink1"
+				},
+				{
+					"linkedService": {
+						"referenceName": "CosmosDb2",
+						"type": "LinkedServiceReference"
+					},
+					"name": "sink2"
 				}
 			],
 			"transformations": [
@@ -33,6 +47,11 @@
 				"     format: 'document',",
 				"     container: 'Users',",
 				"     store: 'cosmosDB') ~> source1",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'document',",
+				"     container: 'Users',",
+				"     store: 'cosmosDB') ~> source2",
 				"source1 sort(asc(UserId, true)) ~> sort1",
 				"sort1 sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
@@ -40,7 +59,18 @@
 				"     store: 'cache',",
 				"     format: 'inline',",
 				"     output: false,",
-				"     saveOrder: 1) ~> sink1"
+				"     saveOrder: 1) ~> sink1",
+				"source2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'document',",
+				"     container: 'Users',",
+				"     deletable: false,",
+				"     insertable: true,",
+				"     updateable: true,",
+				"     upsertable: false,",
+				"     store: 'cosmosDB',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink2"
 			]
 		}
 	}
