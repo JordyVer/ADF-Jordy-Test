@@ -34,6 +34,9 @@
 			"transformations": [
 				{
 					"name": "sort1"
+				},
+				{
+					"name": "AlterRow1"
 				}
 			],
 			"scriptLines": [
@@ -53,6 +56,8 @@
 				"     container: 'Users',",
 				"     store: 'cosmosDB') ~> source2",
 				"source1 sort(asc(UserId, true)) ~> sort1",
+				"source2 alterRow(insertIf(isUpsert()),",
+				"     updateIf(isUpsert())) ~> AlterRow1",
 				"sort1 sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
@@ -60,7 +65,7 @@
 				"     format: 'inline',",
 				"     output: false,",
 				"     saveOrder: 1) ~> sink1",
-				"source2 sink(allowSchemaDrift: true,",
+				"AlterRow1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'document',",
 				"     container: 'Users',",
