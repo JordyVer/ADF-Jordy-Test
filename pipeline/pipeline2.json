@@ -7,7 +7,7 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "Lookup2",
+						"activity": "Select Username",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -18,7 +18,22 @@
 					"expression": {
 						"value": "@empty(activity('Lookup2').output.value)",
 						"type": "Expression"
-					}
+					},
+					"ifTrueActivities": [
+						{
+							"name": "TotalNames",
+							"type": "AppendVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "AllNames",
+								"value": {
+									"value": "@variables('Username')",
+									"type": "Expression"
+								}
+							}
+						}
+					]
 				}
 			},
 			{
@@ -33,38 +48,6 @@
 						"type": "Expression"
 					}
 				}
-			},
-			{
-				"name": "Lookup2",
-				"type": "Lookup",
-				"dependsOn": [
-					{
-						"activity": "Select Username",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "CosmosDbSqlApiSource",
-						"preferredRegions": [],
-						"detectDatetime": true
-					},
-					"dataset": {
-						"referenceName": "CosmosDbSqlApiCollection1",
-						"type": "DatasetReference"
-					},
-					"firstRowOnly": false
-				}
 			}
 		],
 		"parameters": {
@@ -75,6 +58,9 @@
 		"variables": {
 			"Username": {
 				"type": "String"
+			},
+			"AllNames": {
+				"type": "Array"
 			}
 		},
 		"annotations": []
