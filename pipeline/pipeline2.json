@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@empty(activity('Lookup2').output.value)",
+						"value": "@bool(true)",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [
