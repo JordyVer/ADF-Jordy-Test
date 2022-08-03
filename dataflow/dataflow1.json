@@ -37,6 +37,9 @@
 				},
 				{
 					"name": "AlterRow1"
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -50,7 +53,12 @@
 				"     format: 'document',",
 				"     container: 'Users',",
 				"     store: 'cosmosDB') ~> source1",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          Created as string,",
+				"          Name as string,",
+				"          UserId as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'document',",
 				"     container: 'Users',",
@@ -58,6 +66,7 @@
 				"source1 sort(asc(UserId, true)) ~> sort1",
 				"source2 alterRow(insertIf(isUpsert()),",
 				"     updateIf(isUpsert())) ~> AlterRow1",
+				"AlterRow1 derive(id = @(guid())) ~> derivedColumn1",
 				"sort1 sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
@@ -65,7 +74,7 @@
 				"     format: 'inline',",
 				"     output: false,",
 				"     saveOrder: 1) ~> sink1",
-				"AlterRow1 sink(allowSchemaDrift: true,",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'document',",
 				"     container: 'Users',",
